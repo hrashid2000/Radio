@@ -17,8 +17,27 @@ function playAudio(btn) {
         btn.setAttribute('class', 'play');
     }
 }
+function addstream(name,url){ 
+    var newDiv = document.createElement("div")
+    
+    newDiv.innerHTML += name;
+    
+    const audio = new Audio();
+    audio.id = "player";
+    audio.src = url;
+    newDiv.appendChild(audio);
+    
+    btn = document.createElement("button");
+    btn.innerHTML += "Play &#9205;";
+    btn.setAttribute('class', 'play');
+    btn.setAttribute('onclick', 'playAudio(this)');
+    newDiv.appendChild(btn);
+    
+    document.body.appendChild(newDiv);
+}
 
-function addstream(img,name,url){ 
+
+/*function addstream(img,name,url){ 
 var newDiv = document.createElement("div")
 
 const image = new Image();
@@ -42,4 +61,7 @@ btn.setAttribute('onclick', 'playAudio(this)');
 newDiv.appendChild(btn);
 
 document.body.appendChild(newDiv);
-}
+}*/
+
+//loadstream
+//for length(8) of csv do addstream
