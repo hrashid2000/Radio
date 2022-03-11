@@ -35,8 +35,25 @@ function addstream(name,url){
     
     document.body.appendChild(newDiv);
 }
+/*
+const Http = new XMLHttpRequest();
+//const url='http://ssh.noglider.com:8081/user1.csv';
+const url='https://jsonplaceholder.typicode.com/posts';
+Http.open("GET", url);
+Http.send();
 
+Http.onreadystatechange = (e) => {
+  console.log(Http.responseText)
+}
+*/
+async function getData(){
+    const response = await fetch('http://ssh.noglider.com:8081/user1.csv');
+    //const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+    const data = await response.text();
+    console.log(data);
 
+}
+getData();
 /*function addstream(img,name,url){ 
 var newDiv = document.createElement("div")
 
