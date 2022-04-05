@@ -21,9 +21,11 @@ function addstream(name,url,num){
   var newDiv = document.createElement("div")
   newDiv.id = "radio" + String(num);
 
+  //var text = document.createTextNode(String(name));
+  //newDiv.appendChild(text);
   newDiv.innerHTML += name;
   
-  const audio = new Audio();
+  var audio = new Audio();
   audio.id = "player" + String(num);
   audio.src = url;
   newDiv.appendChild(audio);
@@ -64,28 +66,30 @@ return arr;
 }
 
 async function getData(){
-  const response = await fetch('http://ssh.noglider.com:8081/user1.csv');
+  var response = await fetch('http://ssh.noglider.com:8088/user1.csv');
   var data = await response.text();
-  //console.log(typeof data);
-  //console.log(data);
   var final = csvToArray(data);
-  //console.log(final);
-  //console.log(typeof final);
-  //console.log(final);
   for (let i = 0; i< (final.length)-1; i++) {
     addstream(final[i].Name, final[i].Url,i);
   }
-  return final;
+  return;
+}
+/*
+function changestream(num,name,url){
+  playername = "player" + String(num);
+  radioname = "radio" + String(num);
+  document.getElementById(radioname).firstChild.data = String(name);
+  document.getElementById(playername).src = String(url);
+}
+*/
+
+function changestream(){
+  playername = "player" + String(document.getElementById("myInput1").value);
+  radioname = "radio" + String(document.getElementById("myInput1").value);
+  document.getElementById(radioname).firstChild.data = String(document.getElementById("myInput2").value);
+  document.getElementById(playername).src = String(document.getElementById("myInput3").value);
 }
 
-//var data = [];
-var data = getData();
-const printAddress = async () => {
-  const a = await data;
-  console.log(a);
-};
-//printAddress();
-a = document.getElementById("player0");
-console.log(a);
+getData();
 
 
