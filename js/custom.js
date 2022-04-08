@@ -20,6 +20,7 @@ function playAudio(btn) {
 function addstream(name,url,num){ 
   var newDiv = document.createElement("div")
   newDiv.id = "radio" + String(num);
+  newDiv.setAttribute('class', 'streamplayer');
 
   //var text = document.createTextNode(String(name));
   //newDiv.appendChild(text);
@@ -68,6 +69,7 @@ return arr;
 async function getData(){
   var response = await fetch('http://ssh.noglider.com:8088/user1.csv');
   var data = await response.text();
+  console.log(data);
   var final = csvToArray(data);
   for (let i = 0; i< (final.length)-1; i++) {
     addstream(final[i].Name, final[i].Url,i);
@@ -93,3 +95,4 @@ function changestream(){
 getData();
 
 
+//document.getElementsByClassName("streamplayer").length;
