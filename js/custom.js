@@ -1,22 +1,35 @@
+var currentstream = "";
+var clickedplay = 0;
+
 function playAudio(btn) {
   var stream = btn.parentElement.querySelector('audio');
   var playorpause = btn.getAttribute('class');
 
   if (playorpause === 'play') {
-      stream.load();
-  stream.play();
-  btn.innerHTML = "Pause &#9208;";
-      btn.setAttribute('class', 'pause');
+    if (clickedplay == 1){
+      if (currentstream != btn.parentElement.querySelector('audio').id){
+        document.getElementById(currentstream).pause();
+        document.getElementById(currentstream).innerHTML = "Play &#9205;";
+        document.getElementById(currentstream).setAttribute('class', 'play');
+      }
+    }
+    clickedplay = 1;
+    stream.load();
+    stream.play();
+    btn.innerHTML = "Pause &#9208;";
+    btn.setAttribute('class', 'pause'); 
+    currentstream = btn.parentElement.querySelector('audio').id;
   } else {
-      stream.pause();
-  btn.innerHTML = "Play &#9205;";
-      btn.setAttribute('class', 'play');
+    stream.pause();
+    btn.innerHTML = "Play &#9205;";
+    btn.setAttribute('class', 'play');
   }
 
   stream.onended = function () {
-      btn.setAttribute('class', 'play');
+    btn.setAttribute('class', 'play');
   }
 }
+
 function addstream(name,url,num){ 
   var newDiv = document.createElement("div")
   newDiv.id = "radio" + String(num);
@@ -32,6 +45,7 @@ function addstream(name,url,num){
   newDiv.appendChild(audio);
   
   btn = document.createElement("button");
+  //btn.id = "button" + String(num);
   btn.innerHTML += "Play &#9205;";
   btn.setAttribute('class', 'play');
   btn.setAttribute('onclick', 'playAudio(this)');
@@ -69,6 +83,7 @@ return arr;
 async function getData(){
   var response = await fetch('http://ssh.noglider.com:8088/user1.csv');
   var data = await response.text();
+  //console.log(typeof(data));
   console.log(data);
   var final = csvToArray(data);
   for (let i = 0; i< (final.length)-1; i++) {
@@ -90,6 +105,17 @@ function changestream(){
   radioname = "radio" + String(document.getElementById("myInput1").value);
   document.getElementById(radioname).firstChild.data = String(document.getElementById("myInput2").value);
   document.getElementById(playername).src = String(document.getElementById("myInput3").value);
+}
+
+function save(){
+  var s = "Name,Url\n";
+  for (let i = 0; i< (document.getElementsByClassName("streamplayer").length); i++) {
+    playername = "player" + String(i);
+    radioname = "radio" + String(i);
+    var a = document.getElementById(radioname).firstChild.data + "," + document.getElementById(playername).src + "\n";
+    var s = s + a;
+  }
+  console.log(s);
 }
 
 getData();
