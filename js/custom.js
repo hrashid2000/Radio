@@ -9,9 +9,10 @@ function playAudio(btn) {
     if (clickedplay == 1){
       if (currentstream != btn.parentElement.querySelector('audio').id){
         document.getElementById(currentstream).pause();
-        document.getElementById(currentstream).innerHTML = "Play &#9205;";
-        document.getElementById(currentstream).setAttribute('class', 'play');
+        currentbtn.innerHTML = "Play &#9205;";
+        currentbtn.setAttribute('class', 'play');
       }
+
     }
     clickedplay = 1;
     stream.load();
@@ -19,6 +20,7 @@ function playAudio(btn) {
     btn.innerHTML = "Pause &#9208;";
     btn.setAttribute('class', 'pause'); 
     currentstream = btn.parentElement.querySelector('audio').id;
+    currentbtn = btn;
   } else {
     stream.pause();
     btn.innerHTML = "Play &#9205;";
